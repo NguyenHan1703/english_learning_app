@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 from database.user_database import UserDatabase
+import re
 
 class UserLoginScreen:
     def __init__(self, root, app):
@@ -45,6 +46,16 @@ class UserLoginScreen:
     def register(self):
         username = self.entry_username.get().strip()
         password = self.entry_password.get().strip()
+
+    # Kiểm tra tên tài khoản không có ký tự đặc biệt
+        if not re.match("^[A-Za-z0-9_]*$", username):
+            messagebox.showerror("Lỗi", "Tên đăng nhập không được chứa ký tự đặc biệt!")
+            return
+
+        # Kiểm tra mật khẩu dài hơn 6 ký tự
+        if len(password) <= 6:
+            messagebox.showerror("Lỗi", "Mật khẩu phải dài hơn 6 ký tự!")
+            return
 
         if self.db.add_user(username, password):
             messagebox.showinfo("Đăng ký thành công", f"Bạn đã đăng ký thành công với tên đăng nhập: {username}")
