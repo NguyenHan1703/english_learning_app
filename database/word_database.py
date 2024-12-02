@@ -38,3 +38,6 @@ class WordDatabase:
     def word_exists(self, username, english_word):
         """Kiểm tra xem từ vựng đã tồn tại hay chưa."""
         return self.collection.find_one({'username': username, 'english': english_word}) is not None
+    
+    def __del__(self):
+        self.client.close()

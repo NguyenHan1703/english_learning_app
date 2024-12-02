@@ -38,3 +38,6 @@ class UserDatabase:
     def get_all_users(self):
         """Lấy danh sách tất cả người dùng."""
         return list(self.collection.find())
+        
+    def __del__(self):
+        self.client.close()
